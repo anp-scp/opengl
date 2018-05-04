@@ -18,12 +18,12 @@ void myInit()
 	gluOrtho2D(0,400,0,400);
 }
 
-void fill4conn(int x, int y, pixel fill, pixel boundary)
+void fill4conn(int x, int y, pixel fill, pixel old)
 {
 	pixel c;
 	glReadPixels(x, y, 1, 1, GL_RGB, GL_FLOAT, &c);
 	//printf("\n%f %f %f",c.r,c.g,c.b);
-	if((c.r!=boundary.r && c.g!=boundary.g && c.r!=boundary.b))
+	if((c.r==old.r && c.g==old.g && c.r==old.b))
 	{
 		glBegin(GL_POINTS);
 		glColor3f(fill.r,fill.g,fill.b);
@@ -31,10 +31,10 @@ void fill4conn(int x, int y, pixel fill, pixel boundary)
 		glEnd();
 		glFlush();
 		printf("\n%d %d",x,y);
-		fill4conn(x+1,y,fill,boundary);
-		fill4conn(x,y+1,fill,boundary);
-		fill4conn(x-1,y,fill,boundary);
-		fill4conn(x,y-1,fill,boundary);
+		fill4conn(x+1,y,fill,old);
+		fill4conn(x,y+1,fill,old);
+		fill4conn(x-1,y,fill,old);
+		fill4conn(x,y-1,fill,old);
 	}
 }
 
@@ -50,16 +50,16 @@ void displayCB()
 	glEnd();
 	glFlush();
 	
-	pixel fill,boundary;
+	pixel fill,old;
 	fill.r = 1.0;
 	fill.g = 0.0;
 	fill.b = 0.0;
 	
-	boundary.r = 1.0;
-	boundary.g = 1.0;
-	boundary.b = 1.0;
+	old.r = 0.0;
+	old.g = 1.0;
+	old.b = 0.0;
 	
-	fill4conn(50,50,fill,boundary);
+	fill4conn(50,50,fill,old);
 	
 	glEnd();
 	glFlush();
