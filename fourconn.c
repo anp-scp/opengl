@@ -18,25 +18,23 @@ void myInit()
 	gluOrtho2D(0,400,0,400);
 }
 
-void fill4conn(int x, int y, pixel fill, pixel old)
+void fill4conn(int x, int y, pixel fill, pixel boundary)
 {
 	pixel c;
 	glReadPixels(x, y, 1, 1, GL_RGB, GL_FLOAT, &c);
-	printf("\n%f %f %f",c.r,c.g,c.b);
-	if(0)
+	//printf("\n%f %f %f",c.r,c.g,c.b);
+	if((c.r!=boundary.r && c.g!=boundary.g && c.r!=boundary.b))
 	{
 		glBegin(GL_POINTS);
-		glColor3ub(fill.r,fill.g,fill.b);
+		glColor3f(fill.r,fill.g,fill.b);
 		glVertex2f(x,y);
 		glEnd();
 		glFlush();
-		
-		glReadPixels(x,y,1,1,GL_RGB,GL_FLOAT,&c);
 		printf("\n%d %d",x,y);
-		fill4conn(x+1,y,fill,old);
-		fill4conn(x,y+1,fill,old);
-		fill4conn(x-1,y,fill,old);
-		fill4conn(x,y-1,fill,old);
+		fill4conn(x+1,y,fill,boundary);
+		fill4conn(x,y+1,fill,boundary);
+		fill4conn(x-1,y,fill,boundary);
+		fill4conn(x,y-1,fill,boundary);
 	}
 }
 
@@ -45,23 +43,23 @@ void displayCB()
 	glClear(GL_COLOR_BUFFER_BIT);
 	glBegin(GL_POLYGON);
 	glColor3f(0.0,0.0,0.0);
-	glVertex2f(0,0);
-	glVertex2f(150,0);
+	glVertex2f(0,10);
+	glVertex2f(150,10);
 	glVertex2f(150,150);
 	glVertex2f(0,150);
 	glEnd();
 	glFlush();
 	
-	pixel fill,old;
+	pixel fill,boundary;
 	fill.r = 1.0;
 	fill.g = 0.0;
 	fill.b = 0.0;
 	
-	old.r = 255;
-	old.g = 255;
-	old.b = 255;
+	boundary.r = 1.0;
+	boundary.g = 1.0;
+	boundary.b = 1.0;
 	
-	fill4conn(50,50,fill,old);
+	fill4conn(50,50,fill,boundary);
 }
 
 void main(int argc, char **argv)
