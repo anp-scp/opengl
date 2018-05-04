@@ -42,7 +42,7 @@ void boundaryFill4Conn(){
 
       // polygon
       glBegin(GL_POLYGON);
-         glColor3ub(10,10,10);
+         glColor3ub(255,255,10);
          glVertex2f(0,0);
          glVertex2f(150,0);
          glVertex2f(150,150);
@@ -65,7 +65,7 @@ void boundaryFill4Conn(){
       pixel fill, boundary;
 
       fill.red=255;
-      fill.green=0;
+      fill.green=255;
       fill.blue=0;
 
       boundary.red=0;

@@ -42,7 +42,7 @@ void displayCB()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glBegin(GL_POLYGON);
-	glColor3f(0.0,0.0,0.0);
+	glColor3f(0.0,1.0,0.0);
 	glVertex2f(0,10);
 	glVertex2f(150,10);
 	glVertex2f(150,150);
@@ -60,6 +60,9 @@ void displayCB()
 	boundary.b = 1.0;
 	
 	fill4conn(50,50,fill,boundary);
+	
+	glEnd();
+	glFlush();
 }
 
 void main(int argc, char **argv)
