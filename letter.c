@@ -9,17 +9,17 @@ float P[3][5] = {
 		{1,1,1,1,1}
 	      };
 
-float T[3][3] = {
+float R[3][5];
+
+void matMult()
+{
+	int i,j,k,sum=0;
+	float angle = ((3.14/180)*45);
+	float T[3][3] = {
 		{-1,0,0},
 		{0,1,0},
 		{0,0,1}
 	      };
-
-float R[3][5];
-      
-void matMult()
-{
-	int i,j,k,sum=0;
 	for(i = 0; i < 3;i++)
 	{
 		for(j = 0;j<5;j++)
@@ -32,14 +32,15 @@ void matMult()
 			sum = 0;
 		}
 	}
+	glColor3f(0.0,0.0,1.0);
 	glVertex2d(R[0][0],R[1][0]);
 	glVertex2d(R[0][1],R[1][1]);
 	glVertex2d(R[0][1],R[1][1]);
 	glVertex2d(R[0][2],R[1][2]);
 	glVertex2d(R[0][3],R[1][3]);
 	glVertex2d(R[0][4],R[1][4]);
-	
-}		      
+
+}
 
 void myInit()
 {
@@ -88,4 +89,3 @@ void main(int argc, char ** argv)
 	glutKeyboardFunc(keyCB);
 	glutMainLoop();
 }
-
