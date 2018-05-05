@@ -18,6 +18,40 @@ void myInit()
 	gluOrtho2D(0,400,0,400);
 }
 
+void circle(float adjx, float adj)
+{
+	float x, y, p;
+	x = 0; y = 100;
+	p = (5/4)-y;
+	glVertex2d(x+(adjx),y+(adj));
+		glVertex2d(y+(adjx),x+(adj));
+		glVertex2d(x+(adjx),-y+(adj));
+		glVertex2d(y+(adjx),-x+(adj));
+		glVertex2d(-x+(adjx),-y+(adj));
+		glVertex2d(-y+(adjx),-x+(adj));
+		glVertex2d(-x+(adjx),y+(adj));
+		glVertex2d(-y+(adjx),x+(adj));
+	while(x<=y)
+	{
+		x++;
+		if(p<0)
+		p = p+(2*x)+1;
+		else
+		{
+			y--;
+			p = p+(2*x)-(2*y) +1;
+		}
+		glVertex2d(x+(adjx),y+(adj));
+		glVertex2d(y+(adjx),x+(adj));
+		glVertex2d(x+(adjx),-y+(adj));
+		glVertex2d(y+(adjx),-x+(adj));
+		glVertex2d(-x+(adjx),-y+(adj));
+		glVertex2d(-y+(adjx),-x+(adj));
+		glVertex2d(-x+(adjx),y+(adj));
+		glVertex2d(-y+(adjx),x+(adj));
+	}
+}
+
 void fill4conn(int x, int y, pixel fill, pixel old)
 {
 	pixel c;
@@ -41,12 +75,14 @@ void fill4conn(int x, int y, pixel fill, pixel old)
 void displayCB()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
-	glBegin(GL_POLYGON);
+	/*glBegin(GL_POLYGON);
 	glColor3f(0.0,1.0,0.0);
 	glVertex2f(0,10);
 	glVertex2f(150,10);
 	glVertex2f(150,150);
-	glVertex2f(0,150);
+	glVertex2f(0,150);*/
+	glBegin(GL_POINTS);
+	circle(150,150);
 	glEnd();
 	glFlush();
 	
@@ -55,11 +91,11 @@ void displayCB()
 	fill.g = 0.0;
 	fill.b = 0.0;
 	
-	old.r = 0.0;
+	old.r = 1.0;
 	old.g = 1.0;
-	old.b = 0.0;
+	old.b = 1.0;
 	
-	fill4conn(50,50,fill,old);
+	fill4conn(100,100,fill,old);
 	
 	glEnd();
 	glFlush();
