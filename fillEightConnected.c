@@ -23,7 +23,7 @@ void fill4conn(int x, int y, pixel fill, pixel old)
 	pixel c;
 	glReadPixels(x, y, 1, 1, GL_RGB, GL_FLOAT, &c);
 	//printf("\n%f %f %f",c.r,c.g,c.b);
-	if((c.r==old.r && c.g==old.g && c.r==old.b))
+	if((c.r==old.r && c.g==old.g && c.b==old.b))
 	{
 		glBegin(GL_POINTS);
 		glColor3f(fill.r,fill.g,fill.b);
