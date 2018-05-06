@@ -10,14 +10,14 @@ int i=1;
 // function to initialize
 void myInit ()
 {
-	// making background color black as first 
+	// making background color black as first
 	// 3 arguments all are 0.0
 	glClearColor(0.0, 0.0, 0.0, 1.0);
 	// making picture color green (in RGB mode), as middle argument is 1.0
 	glColor3f(0.0, 1.0, 0.0);
 	// breadth of picture boundary is 1 pixel
 	glPointSize(1.0);
-	glMatrixMode(GL_PROJECTION); 
+	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	// setting window dimension in X- and Y- direction
 	gluOrtho2D(-780, 780, -420, 420);
@@ -65,13 +65,19 @@ void keyCB(unsigned char k, int x, int y)
 		exit(0);
 }
 
-void display (void) 
+void display (void)
 {
 	circle(yinc,rad);
 	if(yinc == 320)
+	{
 		i=-1;
+		//rad-=10;
+	}
 	else if(yinc == -320)
+	{
 		i=1;
+		//rad-=10;
+	}
 	yinc+=i;
 }
 
