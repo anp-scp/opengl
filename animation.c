@@ -3,7 +3,9 @@
 #include<math.h>
 #include<stdlib.h>
 
-int j = 0;
+int yinc=0;
+int rad=0;
+int i=1;
 
 // function to initialize
 void myInit ()
@@ -11,25 +13,27 @@ void myInit ()
 	// making background color black as first 
 	// 3 arguments all are 0.0
 	glClearColor(0.0, 0.0, 0.0, 1.0);
-	
 	// making picture color green (in RGB mode), as middle argument is 1.0
 	glColor3f(0.0, 1.0, 0.0);
-	
 	// breadth of picture boundary is 1 pixel
 	glPointSize(1.0);
 	glMatrixMode(GL_PROJECTION); 
 	glLoadIdentity();
-	
 	// setting window dimension in X- and Y- direction
 	gluOrtho2D(-780, 780, -420, 420);
 }
 
-void circle(float adj)
+void Timer(int ex){
+   glutPostRedisplay();
+   glutTimerFunc(1,Timer,10);
+}
+
+void circle(float adj,float extra_r)
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glBegin(GL_POINTS);
 	float x, y, p;
-	x = 0; y = 100;
+	x = 0; y = 100+extra_r;
 	p = (5/4)-y;
 	while(x<=y)
 	{
@@ -52,43 +56,35 @@ void circle(float adj)
 	}
 	glEnd();
 	glFlush();
-}
-
-void display (void) 
-{
-	int i;
-	while(1)
-	{
-		for(i=320;i>=-320;i-=1)
-			circle(i);
-		for(i=-320;i<=320;i+=1)
-			circle(i);
-		if(j == 1)
-			break;
-	}
+	glutSwapBuffers();
 }
 
 void keyCB(unsigned char k, int x, int y)
 {
 	if(k == 'q')
-		j=1;
+		exit(0);
+}
+
+void display (void) 
+{
+	circle(yinc,rad);
+	if(yinc == 320)
+		i=-1;
+	else if(yinc == -320)
+		i=1;
+	yinc+=i;
 }
 
 int main (int argc, char** argv)
 {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
-	
-	// giving window size in X- and Y- direction
-	glutInitWindowSize(1366, 768);
+	glutInitWindowSize(1366, 768);// giving window size in X- and Y- direction
 	glutInitWindowPosition(0, 0);
-	
-	// Giving name to window
-	glutCreateWindow("Circle Drawing");
+	glutCreateWindow("Circle Drawing");// Giving name to window
 	myInit();
-	
 	glutDisplayFunc(display);
+	glutTimerFunc(0,Timer,0);
 	glutKeyboardFunc(keyCB);
 	glutMainLoop();
 }
-
